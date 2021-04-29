@@ -34,7 +34,7 @@ public:
 	}
 	bool DoSomeChecks(void* ptr1, void* ptr2)
 	{
-		return false; //if return false then called only once, otherwise called in a loop
+		return false; //if returned false then called only once, otherwise called in a loop until returned false
 	}
 	void UnkVirtFunc_0x20(void* unk1, int unk2)
 	{
@@ -42,7 +42,7 @@ public:
 	}
 	void RegisterUnkCallback(void* clbk, int unk_Flags, void* unk_pObject)
 	{
-		return; //clbk calls some virt func, do not call it
+		return; //clbk directly calls some virt func, lets better not call it
 	}
 	void UnkVirtFunc_0x30()
 	{
@@ -95,8 +95,8 @@ LPVOID hkGetProcAddress(HMODULE hModule, LPCSTR lpProcName)
 	return oGetProcAddress(hModule, lpProcName);
 }
 
-BOOLEAN WINAPI DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved) {
-
+BOOLEAN WINAPI DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
+{
 	if (dwReason != DLL_PROCESS_ATTACH)
 		return TRUE;
 	
