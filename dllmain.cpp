@@ -9,7 +9,7 @@ public:
 	virtual void Initialize(void) = 0;
 	virtual bool DoSomeChecks(void* ptr1, void* ptr2) = 0;
 	virtual void UnkVirtFunc_0x20(void* unk1, int unk2) = 0; //not sure with return type
-	virtual void RegisterUnkCallback(void* FuncCallback, int unk_Flags, void* unk_pObject) = 0;
+	virtual void RegisterUnkCallback(void* clbk, int unk_Flags, void* unk_pObject) = 0;
 	virtual void UnkVirtFunc_0x30() = 0;
 	virtual void UnkVirtFunc_0x38() = 0;
 	virtual void UnkVirtFunc_0x40() = 0;
@@ -77,12 +77,12 @@ fnLoadLibraryExW oLoadLibraryExW;
 typedef LPVOID(*fnGetProcAddress)(HMODULE, LPCSTR);
 fnGetProcAddress oGetProcAddress;
 
-HMODULE g_hMod;
+HMODULE g_hModule;
 
 HMODULE hkLoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags)
 {
 	if (wcsstr(lpLibFileName, L"easyanticheat_x64.dll"))
-		return g_hMod;
+		return g_hModule;
 
 	return oLoadLibraryExW(lpLibFileName, hFile, dwFlags);
 }
@@ -100,7 +100,7 @@ BOOLEAN WINAPI DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 	if (dwReason != DLL_PROCESS_ATTACH)
 		return TRUE;
 	
-	g_hMod = hModule;
+	g_hModule = hModule;
 	HMODULE hKERNEL32 = GetModuleHandleA("KERNEL32.DLL");
 
 	oLoadLibraryExW = (fnLoadLibraryExW)GetProcAddress(hKERNEL32, "LoadLibraryExW");
